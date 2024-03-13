@@ -44,7 +44,7 @@ public class InfixToPostFix {
         return result;
     }
     public static void main(String[] args) {
-        String s = "a-(b+c*d)/e";
+        String s = "(-(a+b+c)^d)*(g+h)";
         System.out.println(infixToPostfix(s));
     }
 }

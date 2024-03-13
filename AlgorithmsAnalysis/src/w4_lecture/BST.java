@@ -79,48 +79,41 @@ public class BST {
         return null;
     }
 
-    public boolean insert(int data) {
-        Node currentNode = root, parrentNode = null;
-        while (currentNode != null) {
-            if (data < currentNode.value) {
-                parrentNode = currentNode;
-                currentNode = currentNode.left;
-            } else if (data > currentNode.value) {
-                parrentNode = currentNode;
-                currentNode = currentNode.right;
-            } else {
-                return false;
-            }
+    public Node insert(int data) {
+        return insert(this.root, data);
+    }
+    
+    private Node insert(Node root, int data) {
+        if (root == null) {
+            return new Node(data);
         }
-        if (data < parrentNode.value) {
-            parrentNode.left = new Node(data);
-        } else {
-            parrentNode.right = new Node(data);
+        if (root.value > data) {
+            root.left = insert(root.left, data);
+        } else if (root.value < data) {
+            root.right = insert(root.right, data);
         }
-        return true;
+        return root;
     }
 
     public Node deleteNode(Node root, int value) {
         if (root == null) {
             return root;
         }
-
         if (value < root.value) {
             root.left = deleteNode(root.left, value);
         } else if (value > root.value) {
             root.right = deleteNode(root.right, value);
         } else {
-            if (root.left == null) {
-                return root.right;
-            } else if (root.right == null) {
+            if (root.left != null){
+                Node current = root.left;
+                while (current.right != null){
+                    current = current.right;
+                }
+                current.right = root.right;
                 return root.left;
+            }else{
+                return root.right;
             }
-
-            Node current = root.right;
-            while (current.left != null) {
-                current = current.left;
-            }
-            current.right = deleteNode(root.right, current.value);
         }
         return root;
     }

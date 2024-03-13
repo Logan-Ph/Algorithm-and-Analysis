@@ -1,5 +1,6 @@
 package w2;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class problem2 {
@@ -27,8 +28,24 @@ public class problem2 {
         }
     }
 
+    static void printUniqueElements3(int[] arr){
+        Arrays.sort(arr);
+        for (int i = 0; i < arr.length-1 ; i++){
+            if (arr[i] != arr[i+1]){
+                System.out.print(arr[i] + " ");
+            }
+        }
+        System.out.print(arr[arr.length-1]);
+    }
+
     public static void main(String[] args) {
-        int[] arr = {6,8,10,11,6,10};
+        int[] arr = {6,8,10,11,6,10,11,11};
         printUniqueElements1(arr);
+        System.out.println();
+
+        printUniqueElements2(arr);
+        System.out.println();
+
+        printUniqueElements3(arr);
     }
 }
