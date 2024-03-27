@@ -25,8 +25,7 @@ public class Problem3 {
         return graph;
     }
 
-    public static void depthFirstSearch(HashMap<String, ArrayList<String>> graph, Set<String> visisted,
-            String startNode) {
+    public static void depthFirstSearch(HashMap<String, ArrayList<String>> graph, Set<String> visisted, String startNode) {
         System.out.println(startNode);
         visisted.add(startNode);
         for (String neighbor : graph.get(startNode)) {
