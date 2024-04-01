@@ -91,13 +91,13 @@ public class AVL<T extends Comparable<T>> {
 
         // Left Right Case
         if (balance > 1 && value.compareTo(node.right.value) > 0) {
-            node.left = leftRotate(node.left);
+            node.left = leftRotate(node.left); // change to lef left case
             return rightRotate(node);
         }
 
         // Right Left Case
         if (balance < -1 && value.compareTo(node.left.value) < 0) {
-            node.right = rightRotate(node.right);
+            node.right = rightRotate(node.right); // change to right right case
             return leftRotate(node);
         }
 

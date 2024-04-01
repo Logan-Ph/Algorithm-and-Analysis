@@ -1,128 +1,82 @@
 package w4_Tutorial;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
-
 public class Problem3 {
-    public static HashMap<String, ArrayList<String>> buildGraph(String[][] edges) {
-        HashMap<String, ArrayList<String>> graph = new HashMap<>();
-        for (String[] edge : edges) {
-            if (!graph.containsKey(edge[0])) {
-                graph.put(edge[0], new ArrayList<>());
-            }
-
-            if (!graph.containsKey(edge[1])) {
-                graph.put(edge[1], new ArrayList<>());
-            }
-
-            graph.get(edge[0]).add(edge[1]);
-            graph.get(edge[1]).add(edge[0]);
-        }
-        return graph;
+    
+    public static int findLevel(Node root, int a, int level)
+    {
+        if (root == null)
+            return -1;
+        if (root.value == a)
+            return level;
+        int left = findLevel(root.left, a, level + 1);
+        if (left == -1)
+            return findLevel(root.right, a, level + 1);
+        return left;
     }
 
-    public static void depthFirstSearch(HashMap<String, ArrayList<String>> graph, Set<String> visisted, String startNode) {
-        System.out.println(startNode);
-        visisted.add(startNode);
-        for (String neighbor : graph.get(startNode)) {
-            if (!visisted.contains(neighbor)) {
-                visisted.add(neighbor);
-                depthFirstSearch(graph, visisted, neighbor);
-            }
-        }
+    public static Node LCA(Node root, int n1, int n2)
+    {
+        if (root == null)
+            return root;
+        if (root.value == n1 || root.value == n2)
+            return root;
+ 
+        Node left = LCA(root.left, n1, n2);
+        Node right = LCA(root.right, n1, n2);
+ 
+        if (left != null && right != null)
+            return root;
+        if (left == null && right == null)
+            return null;
+        if (left != null)
+            return left;
+        else
+            return right;
     }
 
-    public static void breadthFirstSearch(HashMap<String, ArrayList<String>> graph, String startNode) {
-        Queue<String> queue = new LinkedList<>();
-        Set<String> visited = new HashSet<>();
-        queue.add(startNode);
-        visited.add(startNode);
-        while (!queue.isEmpty()) {
-            String current = queue.poll();
-            System.out.println(current);
-            for (String neighbor : graph.get(current)) {
-                if (!visited.contains(neighbor)) {
-                    visited.add(neighbor);
-                    queue.add(neighbor);
-                }
-            }
-        }
-
-    }
-
-    public static boolean hasPathDFS(HashMap<String, ArrayList<String>> graph, String src, String dst,
-            Set<String> visited, Queue<String> rightPath) {
-        if (src.equals(dst)) {
-            return true;
-        }
-
-        if (visited.contains(src)) {
-            rightPath.remove(src);
-            return false;
-        }
-
-        visited.add(src);
-        for (String neighbor : graph.get(src)) {
-            if (hasPathDFS(graph, neighbor, dst, visited, rightPath)) {
-                rightPath.add(neighbor);
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static boolean hashPathBFS(HashMap<String, ArrayList<String>> graph, String src, String dst) {
-        Queue<String> queue = new LinkedList<>();
-        Set<String> visited = new HashSet<>();
-
-        queue.add(src);
-        visited.add(src);
-
-        while (!queue.isEmpty()) {
-            String current = queue.poll();
-            if (current.equals(dst)) {
-                return true;
-            }
-
-            for (String neighbor : graph.get(current)) {
-                if (!visited.contains(neighbor)) {
-                    visited.add(neighbor);
-                    queue.add(neighbor);
-                }
-            }
-        }
-
-        return false;
+    public static int findDistance(Node root, int a, int b)
+    {
+        Node lca = LCA(root, a, b);
+ 
+        int d1 = findLevel(lca, a, 0);
+        int d2 = findLevel(lca, b, 0);
+ 
+        return d1 + d2;
     }
 
     public static void main(String[] args) {
-        String[][] edges = {
-                { "A", "F" },
-                { "A", "B" },
-                { "F", "E" },
-                { "E", "B" },
-                { "B", "C" },
-                { "E", "D" },
-                { "C", "D" }
-        };
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right.left = new Node(6);
+        root.right.right = new Node(7);
+        root.right.left.right = new Node(8);
 
-        HashMap<String, ArrayList<String>> graph = buildGraph(edges);
-        System.out.println(graph);
-        // System.out.println("Depth First Search: ");
-        // depthFirstSearch(graph, new HashSet<>(), "A");
-        // System.out.println("Beadth First Search");
-        // breadthFirstSearch(graph, "A");
-        // System.out.println("Has path from A to D");
-        // Queue<String> rightPath = new LinkedList<>();
-        // System.out.println(hasPathDFS(graph, "B", "D", new HashSet<>(), rightPath));
-        // rightPath.add("B");
-        // System.out.println(rightPath);
-
-        System.out.println(hashPathBFS(graph, "B", "D"));
+        System.out.println("Dist(4, 5) = "
+                           + findDistance(root, 4, 5));
+ 
+        System.out.println("Dist(4, 6) = "
+                           + findDistance(root, 4, 6));
+ 
+        System.out.println("Dist(3, 4) = "
+                           + findDistance(root, 3, 4));
+ 
+        System.out.println("Dist(2, 4) = "
+                           + findDistance(root, 2, 4));
+ 
+        System.out.println("Dist(8, 5) = "
+                           + findDistance(root, 8, 5));
     }
-}
+}   
+
+class Node{
+    public int value;
+    public Node left, right;
+
+    public Node(int value){
+        this.value = value;
+
+    }
+} 

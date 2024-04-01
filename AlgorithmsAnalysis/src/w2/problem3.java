@@ -8,20 +8,19 @@ public class problem3 {
 
         int i = 0;
         int j = 0;
-        int minPlatforms = 0;
-        int platformsRequired = 0;
-        while (i < arrivals.length && j < departures.length) {
+        int minPlatForms = 0;
+        int maxPlatFormsRequired = 0;
+        while ( i < arrivals.length && j < departures.length) {
             if (arrivals[i] < departures[j]){
-                platformsRequired++;
                 i++;
-            } else {
-                platformsRequired--;
+                minPlatForms++;
+            }else{
                 j++;
+                minPlatForms--;
             }
-
-            minPlatforms = Math.max(minPlatforms, platformsRequired);
+            maxPlatFormsRequired = Math.max(minPlatForms, maxPlatFormsRequired);
         }
-        System.out.println("Minimum platforms required: " + minPlatforms);
+        System.out.println(maxPlatFormsRequired);
     }
 
     public static void main(String[] args) {

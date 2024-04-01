@@ -8,14 +8,17 @@ public class matchingParanthesis {
             if (c == '(' || c == '[' || c == '{'){
                 stack.push(c);
             }
-            if (c ==')' || c == ']' || c == '}'){
-                if (stack.isEmpty()){
+
+            if (c == ')' || c == ']' || c == '}'){
+                if (!stack.isEmpty()){
                     return false;
                 }
-                char top = stack.pop();
-                if ((c == ')' && top != '(') || (c == ']' && top != '[') || (c == '}' && top != '{')){
+
+                char top = stack.peek();
+                if ((top == '(' && c != ')') || (top == '{' && c != '}') || (top == '[' && c != ']')){
                     return false;
                 }
+
             }
         }
         return stack.isEmpty();

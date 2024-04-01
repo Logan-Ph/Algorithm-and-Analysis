@@ -27,7 +27,7 @@ public class problem4 {
     }
 
     public static void main(String[] args) {
-        int[] arr = {-100, 50, -52, 99};
+        int[] arr = {2, 3, 9, 6};
         findClosestToZero(arr);
     }
 }

@@ -2,7 +2,6 @@ package w4_Tutorial;
 
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 class Node {
     public Node left, right;
@@ -68,16 +67,15 @@ class BST {
     }
 
     public boolean isValidBST(Node root) {
-        if (root == null)
-            return true;
+        return isValidBSTHelper(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
 
-        if (root.left != null && root.left.value > root.value)
-            return false;
-        if (root.right != null && root.right.value < root.value)
-            return false;
+    private boolean isValidBSTHelper(Node root, int leftRange, int rightRange){
+        if (root == null) return true;
 
-        return isValidBST(root.left) && isValidBST(root.left);
+        if (!(root.value > leftRange && root.value < rightRange)) return false;
 
+        return isValidBSTHelper(root.left, leftRange, root.value) && isValidBSTHelper(root.right, root.value, rightRange);
     }
 
     public Node searchNode(int value) {
@@ -112,20 +110,18 @@ class BST {
 
     public Node findMinimumNode(Node root, int value){
         Node temp = root;
+        Node succ = null;
 
-        if (root == null) return null;
-
-        if (root.value < value){
-            Node current = findMinimumNode(root.right, value);
-            temp = (current!=null) ? current : temp;
-        };
-
-        if (root.value > value){
-            Node current = findMinimumNode(root.left, value);
-            temp = (current!=null) ? current : temp;
-        };
+        while (temp != null) {
+            if (value > temp.value){
+                temp = temp.right;
+            }else{
+                succ = temp;
+                temp = temp.left;
+            }
+        }
         
-        return (temp.value >= value) ? temp : null;
+        return (succ != null) ? succ : null;
     }
 }
 
@@ -149,6 +145,6 @@ public class Problem1_2 {
 
         System.out.println(bst.isValidBST(bst.root));
         // bst.breadthFirstSearch();
-        System.out.println(bst.findMinimumNode(bst.root, 20).value);
+        System.out.println(bst.findMinimumNode(bst.root, 8).value);
     }
 }

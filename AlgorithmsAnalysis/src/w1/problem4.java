@@ -2,11 +2,13 @@ package w1;
 
 public class problem4 {
     static void rangeSum(int[] arr, int start, int end){
-        int sum = 0;
-        for (int i = start; i <= end; i++){
-            sum += arr[i];
+        int[] sumRange = new int[arr.length];
+        sumRange[0] = arr[0];
+        for (int i = 1; i < arr.length; i++){
+            sumRange[i] = sumRange[i-1] + arr[i];
         }
-        System.out.println(sum);
+
+        System.out.println(sumRange[end] - sumRange[start] + arr[start]);
     }
 
     public static void main(String[] args) {

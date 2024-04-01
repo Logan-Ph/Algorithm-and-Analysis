@@ -64,16 +64,16 @@ public class Problem2 {
             }
         }
 
-        private boolean linearProbingHandleCollison(int hashIndex, RMITStudent s) {
-            for (int i = hashIndex; i < hashIndex + collections.length; i++) {
-                hashIndex = (hashIndex - collections.length < 0) ? hashIndex : hashIndex - collections.length - 1;
-                if (collections[hashIndex] == null) {
-                    collections[hashIndex] = s;
-                    return true;
-                }
-            }
-            return false;
-        }
+        // private boolean linearProbingHandleCollison(int hashIndex, RMITStudent s) {
+        //     for (int i = hashIndex; i < hashIndex + collections.length; i++) {
+        //         hashIndex = (hashIndex - collections.length < 0) ? hashIndex : hashIndex - collections.length - 1;
+        //         if (collections[hashIndex] == null) {
+        //             collections[hashIndex] = s;
+        //             return true;
+        //         }
+        //     }
+        //     return false;
+        // }
 
         RMITStudent get(String studentId) {
             return (collections[calculateHashString(studentId)] != null) ? collections[calculateHashString(studentId)]

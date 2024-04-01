@@ -20,19 +20,18 @@ public class InfixToPostFix {
         String result = "";
         for (char c: s.toCharArray()){
             if (Character.isLetterOrDigit(c)){
-                result += c;
+                result  += c;
             }
             else if (c == '('){
                 stack.push(c);
             }
             else if (c == ')'){
-                while (!stack.isEmpty() && stack.peek() != '('){
+                while (!stack.isEmpty() && stack.peek() != '(') {
                     result += stack.pop();
                 }
                 stack.pop();
-            }
-            else{
-                while (!stack.isEmpty() && precedence(c) <= precedence(stack.peek())){
+            }else{
+                while (!stack.isEmpty() && precedence(stack.peek()) >= precedence(c)) {
                     result += stack.pop();
                 }
                 stack.push(c);
@@ -44,7 +43,7 @@ public class InfixToPostFix {
         return result;
     }
     public static void main(String[] args) {
-        String s = "(-(a+b+c)^d)*(g+h)";
+        String s = "a-(b*c-d)/e";
         System.out.println(infixToPostfix(s));
     }
 }
