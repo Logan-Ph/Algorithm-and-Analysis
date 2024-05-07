@@ -4,17 +4,17 @@ import java.util.Arrays;
 
 public class selectionSort {
 
-    public static void sort(int[] arrray){
-        for(int i = 0; i < arrray.length; i++){
-            int min = i;
-            for (int j = i+1; j < arrray.length; j++){
-                if (arrray[j] < arrray[min]){
+    public static void sort(int[] array){
+        for(int i = 0; i < array.length; i++){
+           int min = i;
+           for (int j = i; j <array.length; j++){
+                if (array[j] < array[min]){
                     min = j;
                 }
-            }
-            int temp = arrray[i];
-            arrray[i] = arrray[min];
-            arrray[min] = temp;
+           }
+           int temp = array[i];
+           array[i] = array[min];
+           array[min] = temp;
         }
     }
 

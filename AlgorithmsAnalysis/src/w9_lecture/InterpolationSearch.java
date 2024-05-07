@@ -8,13 +8,13 @@ public class InterpolationSearch {
     public static int interpolationSearch(int[] array, int low, int high, int x) {
         int pos;
 
-        if (low <= high && x >= array[low] && x <= array[high]) {
-            pos = low + ((high - low) / (array[high] - array[low])) * (x - array[low]);
-            if (array[pos] < x) {
+        if (low <= high && x >= array[low] && x <=  array[high]){
+            pos = low + (high - low)*((x-array[low])/(array[high] - array[low]));
+            if (x > array[pos]){
                 return interpolationSearch(array, pos + 1, high, x);
-            } else if (array[pos] > x) {
+            }else if (x < array[pos]){
                 return interpolationSearch(array, low, pos - 1, x);
-            } else {
+            }else{
                 return pos;
             }
         }

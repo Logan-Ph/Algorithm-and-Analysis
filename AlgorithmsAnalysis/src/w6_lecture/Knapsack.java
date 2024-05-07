@@ -29,7 +29,6 @@ public class Knapsack {
                        knapSack(W, wt, val, n - 1)); 
     } 
   
-    // Driver code 
     public static void main(String args[]) 
     { 
         int profit[] = new int[] { 60, 100, 120 }; 

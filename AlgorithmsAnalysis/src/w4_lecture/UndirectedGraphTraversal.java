@@ -27,14 +27,14 @@ public class UndirectedGraphTraversal {
 
     public static void depthFirstSearch(HashMap<String, ArrayList<String>> graph, Set<String> visited,
             String startNode) {
-        if (!visited.contains(startNode)) {
-            System.out.print(startNode + " ");
-            visited.add(startNode);
-            for (String neighbor : graph.get(startNode)) {
-                if (!visited.contains(neighbor)) {
-                    depthFirstSearch(graph, visited, neighbor);
-                }
-            }
+
+        if (visited.contains(startNode))
+            return;
+            
+        System.out.print(startNode + " ");
+        visited.add(startNode);
+        for (String neighbor : graph.get(startNode)) {
+            depthFirstSearch(graph, visited, neighbor);
         }
     }
 
