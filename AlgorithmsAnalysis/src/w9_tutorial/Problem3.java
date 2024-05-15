@@ -1,15 +1,30 @@
 package w9_tutorial;
 
 public class Problem3 {
-    public static void main(String[] args) {
-        double number = 3.0; // The number whose square root you want to find
-        double guess = number / 2.0; // Start with a guess that's halfway the number
-        double precision = 0.000001; // The precision you want (up to six digits after the decimal point)
+    static double sqrt(double X) {
+        double eps = 0.0000001;
+        double min = 0;
+        double max = X;
 
-        while (Math.abs(guess * guess - number) > precision) {
-            guess = (guess + number / guess) / 2.0; // Update the guess using the Newton-Raphson method
+        // this is because the square root of a number is larger than itself
+        if (X <  1) {
+            max = 1;
         }
 
-        System.out.println("The square root of " + number + " is approximately " + guess);
+        while (max - min > eps) {
+            double mid = (max + min) / 2.0;
+            if (mid * mid > X){
+                max = mid;
+            }else {
+                min = mid;
+            }
+        }
+
+        return max;
+    }
+
+    public static void main(String[] args) {
+        double number = 0.5;
+        System.out.println("The square root of " + number + " is approximately " +  sqrt(number));
     }
 }

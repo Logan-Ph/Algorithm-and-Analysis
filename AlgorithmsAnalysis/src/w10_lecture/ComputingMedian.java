@@ -7,7 +7,7 @@ public class ComputingMedian {
         int i = low - 1;
         int pivot = array[high];
         for (int j = low; j < high; j++){
-            if (array[j] < pivot ){
+            if (array[j] < pivot){
                 i++;
                 int temp = array[j];
                 array[j] = array[i];
@@ -16,17 +16,17 @@ public class ComputingMedian {
         }
         array[high] = array[i+1];
         array[i+1] = pivot;
-        return i+1;
+        return i + 1;
     }
 
     public static int selectMedian(int[] array, int low, int high, int k){
         int partition = partition(array, low, high);
-        if (partition == k){
+        if (k == partition){
             return array[partition];
-        }else if (partition > k){
-            return selectMedian(array, low, partition-1, k);
-        }else{
+        }else if (k > partition){
             return selectMedian(array, partition + 1, high, k);
+        }else{
+            return selectMedian(array, low, partition - 1, k);
         }
     }
 

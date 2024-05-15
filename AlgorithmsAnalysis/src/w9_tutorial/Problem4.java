@@ -1,32 +1,33 @@
 package w9_tutorial;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 public class Problem4 {
-    public static List<String> findOrder(String[] courses, int[][] prerequisites){
-        Map<String,Integer> courseToIndex = new HashMap<>();
-        for (int i = 0; i < courses.length; i++){
+    public static List<String> findOrder(String[] courses, int[][] prerequisites) {
+        Map<String, Integer> courseToIndex = new HashMap<>();
+        for (int i = 0; i < courses.length; i++) {
             courseToIndex.put(courses[i], i);
         }
 
-        System.out.println(courseToIndex);
-
         List<String> order = new ArrayList<>();
         HashSet<Integer> visited = new HashSet<>();
-        for (int i = 0; i < courses.length; i++){
-            if (!visited.contains(i)){
+        for (int i = 0; i < courses.length; i++) {
+            if (!visited.contains(i)) {
                 dfs(i, prerequisites, visited, order, courses);
             }
         }
-        
+
         return order;
     }
 
-    static void dfs(int courseIndex, int[][] prerequisites, HashSet<Integer> visited, List<String> order, String[] courses){
+    static void dfs(int courseIndex, int[][] prerequisites, HashSet<Integer> visited, List<String> order,
+            String[] courses) {
         visited.add(courseIndex);
 
         for (int i = 0; i < prerequisites[courseIndex].length; i++) {
@@ -38,15 +39,96 @@ public class Problem4 {
         order.add(courses[courseIndex]);
     }
 
+    static String[] topoSort(String[] courseNames, int[][] requires) {
+        int n = courseNames.length;
+        String[] res = new String[n];
+        Course[] courses = new Course[n];
+        Queue<Course> queue = new LinkedList<>();
+
+        for (int i = 0; i < n; i ++){
+            courses[i] = new Course(courseNames[i], i);
+            for (int j = 0; j < n; j++){
+                if (requires[i][j] != 0){
+                    courses[i].increaseDegree();    
+                }
+            }
+        }
+
+        for (int i = 0; i < n ; i++){
+            if (courses[i].isSource()){
+                queue.add(courses[i]);
+                courses[i].visited = true;
+            }
+        }
+
+        int p = 0;
+        while (!queue.isEmpty()) {
+            Course u = queue.peek();
+            queue.poll();
+            res[p++] = u.name;
+            int source = u.index;
+            for (int target = 0; target < n ; target++){
+                if (requires[target][source] == 0 || courses[target].visited) continue;
+
+                courses[target].decreaseDegree();
+
+                if (courses[target].isSource()) {
+                    queue.add(courses[target]);
+                    courses[target].visited = true;
+                }
+            }
+        }
+
+        if (p < n) System.out.println("Cannot take all the course");
+
+        return res;
+    }
+
     public static void main(String[] args) {
-        String[] courses = {"Course0", "Course1", "Course2", "Course3"};
+        String[] courses = { "Course0", "Course1", "Course2", "Course3" };
         int[][] prerequisites = {
-            {0, 0, 0, 0},
-            {1, 0, 1, 0},
-            {0, 0, 0, 1},
-            {1, 0, 0, 0}
+                { 0, 0, 0, 0 },
+                { 1, 0, 1, 0 },
+                { 0, 0, 0, 1 },
+                { 1, 0, 0, 0 }
         };
 
         System.out.println(findOrder(courses, prerequisites));
+
+        int[][] requires = new int[][] {
+                { 0, 0, 0, 0 },
+                { 1, 0, 1, 0 },
+                { 0, 0, 0, 0 },
+                { 1, 0, 0, 0 }
+        };
+
+        String[] learningOrder = topoSort(courses, requires);
+        System.out.println(Arrays.toString(learningOrder));
+    }
+}
+
+class Course {
+    String name;
+    int index;
+    int inDegree;
+    boolean visited;
+
+    public Course(String n, int i) {
+        name = n;
+        index = i;
+        inDegree = 0;
+        visited = false;
+    }
+
+    public void increaseDegree() {
+        inDegree++;
+    }
+
+    public void decreaseDegree() {
+        inDegree--;
+    }
+
+    public boolean isSource() {
+        return inDegree == 0;
     }
 }

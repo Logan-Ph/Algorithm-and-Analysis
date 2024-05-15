@@ -6,7 +6,7 @@ public class SearchInSortedList {
     static void sequentialSearching(int[] array, int key){
         for (int i =0; i < array.length; i++){
             if (array[i] == key){
-                System.out.println("Found at index " + i);
+                System.out.println("Found at index: " + i);
                 return;
             }
         }
@@ -16,19 +16,17 @@ public class SearchInSortedList {
         Arrays.sort(array);
         int left = 0;
         int right = array.length - 1;
-        System.out.println(Arrays.toString(array));
-        while (left < right) {
-            int mid = (left + right) / 2;
-            if (array[mid] > key){
-                right = mid - 1;
-            }else if (array[mid] < key){
+        while (right > left) {
+            int mid = (right + left) / 2;
+            if (array[mid] < key){
                 left = mid + 1;
+            }else if (array[mid] > key){
+                right = mid - 1;
             }else{
-                System.out.println("Found at index: " + mid);
+                System.out.println("Found at index: " + mid );
                 return;
             }
         }
-        return;
     }
 
     public static void main(String[] args) {

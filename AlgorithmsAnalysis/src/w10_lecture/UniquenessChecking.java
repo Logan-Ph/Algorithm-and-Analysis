@@ -4,26 +4,26 @@ import java.util.Arrays;
 
 public class UniquenessChecking {
     static void uniquenessChecking(int[] array){
-        for (int i = 0; i < array.length-1; i++){
-            for (int j = i+1; j< array.length; j++){
+        for (int i =0; i < array.length-1; i++){
+            for (int j = i+1; j < array.length ; j++){
                 if (array[i] == array[j]){
-                    System.out.println("The array is not unique");
+                    System.out.println("There is a duplicate key: " + array[i]);
                     return;
                 }
             }
         }
-        System.out.println("The array is unique");
+        System.out.println("There is no duplication");
     }
 
     static void optimizedUniqenessChecking(int[] array){
         Arrays.sort(array);
         for (int i = 1; i < array.length; i++){
-            if (array[i] == array[i-1]){
-                System.out.println("The array is not unique");
+            if (array[i-1] == array[i]){
+                System.out.println("There is a duplicate key: " + array[i]);
                 return;
-            } 
+            }
         }
-        System.out.println("The array is unique");
+        System.out.println("There is no duplication");
     }
 
     public static void main(String[] args) {
