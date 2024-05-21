@@ -2,7 +2,7 @@ package w8_lecture;
 
 import java.util.Arrays;
 
-public class MergeSort {
+public class MergeSortPractice {
     public static void merge(int[] arr, int l, int r, int m) {
         int n1 = m - l + 1;
         int n2 = r - m;
@@ -15,11 +15,11 @@ public class MergeSort {
         }
 
         for (int i = 0; i < n2; i++) {
-            R[i] = arr[m + 1 + i];
+            R[i] = arr[m + i + 1];
         }
 
-        int i = 0, j = 0, k = 0;
-        k = l;
+        int i = 0, j = 0;
+        int k = l;
 
         while (i < n1 && j < n2) {
             if (L[i] < R[j]) {
@@ -43,6 +43,7 @@ public class MergeSort {
             j++;
             k++;
         }
+
     }
 
     public static void mergeSort(int[] arr, int l, int r) {

@@ -1,7 +1,5 @@
 package w8_tutorial;
 
-import java.util.HashMap;
-
 public class Problem2b {
     static class LinkedList {
         public Node head;
@@ -53,28 +51,26 @@ public class Problem2b {
             this.value = value;
         }
 
-        public static boolean isBalanced(NodeBST node, HashMap<NodeBST, Integer> hashMap){
-            if (node == null){
-                return true;
-            }
-
-            int leftHeight, rightHeight;
-
-            if (!hashMap.containsKey(node.left)){
-                leftHeight = height(node.left);
-                hashMap.put(node.left, leftHeight);
-            }else{
-                leftHeight = hashMap.get(node.left);
+        public static boolean isBalanced(NodeBST root) {
+            return checkBalance(root) != -1;
+        }
+        
+        private static int checkBalance(NodeBST node) {
+            if (node == null) {
+                return 0; // Height of an empty tree is 0 and it is balanced
             }
         
-            if (!hashMap.containsKey(node.right)){
-                rightHeight = height(node.right);
-                hashMap.put(node.right, rightHeight);
-            }else{
-                rightHeight = hashMap.get(node.right);
+            int leftHeight = checkBalance(node.left);
+            if (leftHeight == -1) return -1; // Left subtree is not balanced
+        
+            int rightHeight = checkBalance(node.right);
+            if (rightHeight == -1) return -1; // Right subtree is not balanced
+        
+            if (Math.abs(leftHeight - rightHeight) > 1) {
+                return -1; // Current node is not balanced
             }
-
-            return Math.abs(leftHeight - rightHeight) <= 1 && isBalanced(node.left, hashMap) && isBalanced(node.right, hashMap);
+        
+            return 1 + Math.max(leftHeight, rightHeight); // Return the height of the current node
         }
 
         public static int height(NodeBST node){
@@ -85,15 +81,21 @@ public class Problem2b {
         }
     }
 
-    public static NodeBST constructBalancedBST(LinkedList linkedList, int l, int h) {
-        if (l > h) {
-            return null;
+    public static NodeBST constructBalancedBST(Node begin, Node end) {
+        if (begin == end) return null;
+
+        Node slow = begin;
+        Node fast = begin;
+
+        while (fast != end && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
         }
-        int m = (l + h) / 2;
-        NodeBST root = new NodeBST(linkedList.getNode(m).value);
-        root.left = constructBalancedBST(linkedList, l, m - 1);
-        root.right = constructBalancedBST(linkedList, m + 1, h);
-        return root;
+
+        NodeBST current = new NodeBST(slow.value);
+        current.left = constructBalancedBST(begin, slow);
+        current.right = constructBalancedBST(slow.next, end);
+        return current;
     }
 
     public static void main(String[] args) {
@@ -105,7 +107,7 @@ public class Problem2b {
         linkedList.appendNode(5);
         linkedList.appendNode(6);
 
-        NodeBST root = constructBalancedBST(linkedList, 0, 6);
-        System.out.println(NodeBST.isBalanced(root, new HashMap<>()));
+        NodeBST root = constructBalancedBST(linkedList.head, linkedList.tail);
+        // System.out.println(NodeBST.isBalanced(root));
     }
 }

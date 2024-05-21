@@ -49,10 +49,6 @@ public class ActivitySelection {
     }
 
     public static void main(String[] args) {
-        // int[][] activities = new int[][] { { 3, 4 }, { 0, 6 }, { 8, 9 }, { 4, 5 }, { 1, 2 } };
-        // generateSubset(activities, new boolean[activities.length], 0);
-        // selectActivities(activities);
-
         Task[] tasks = new Task[] {
                 new Task(3, 4),
                 new Task(0, 6),

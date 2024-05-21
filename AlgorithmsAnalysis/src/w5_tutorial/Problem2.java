@@ -1,7 +1,6 @@
 package w5_tutorial;
 
 public class Problem2 {
-
     /**
      * 
      */

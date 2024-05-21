@@ -1,6 +1,7 @@
 package w5_lecture;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
     * The RadixSort class implements the radix sort algorithm.
@@ -52,6 +53,8 @@ public class RadixSort {
             output[(count[Math.floorDiv(arr[i], expo) % 10 ]--) -1 ] = arr[i];
         }
 
+        System.out.println(Arrays.toString(output));
+
         return output;
     }
 
@@ -61,12 +64,16 @@ public class RadixSort {
         for (int expo = 1; max / expo > 0; expo *= 10) {
             arr = countSort(arr, expo);
         }
-
-        System.out.println(Arrays.toString(arr));
     }
 
     public static void main(String[] args) {
-        int[] arr = { 170, 45, 75, 90, 802, 24, 2, 66 };
+        // int[] arr = new int[10];
+        // for (int i = 0; i < 10; i++) {
+        //     Random random = new Random();
+        //     int number = random.nextInt(20);
+        //     arr[i] = number;
+        // }
+        int[] arr = { 4, 11, 3, 9, 7, 3, 3, 0, 10, 1 };
         radixSort(arr);
     }
 }

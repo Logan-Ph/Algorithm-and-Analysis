@@ -97,7 +97,7 @@ public class BST {
 		if (root == null) return root;
 
 		if (root.value > value) root.left = deleteNode(root.left, value);
-		if (root.value < value) root.right = deleteNode(root.left, value);
+		if (root.value < value) root.right = deleteNode(root.right, value);
 
 		if (root.left == null) {
 			return root.right;

@@ -129,8 +129,7 @@ class BinaryHeap {
     // and it will raise up if necessary to maintain ORDER property
     public void insert(int n) {
         // first, increase the size
-        size++;
-        heap[size - 1] = n;
+        heap[size++] = n;
 
         // push n up until it reach the correct location
         // or reach the root

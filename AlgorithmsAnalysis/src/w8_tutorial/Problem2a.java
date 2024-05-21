@@ -27,29 +27,26 @@ public class Problem2a {
         return null;
     }
 
-    public static boolean isBalanced(Node root, HashMap<Node, Integer> map) {
-        if (root == null) {
-            return true;
+    public static boolean isBalanced(Node root) {
+        return checkBalance(root) != -1;
+    }
+    
+    private static int checkBalance(Node node) {
+        if (node == null) {
+            return 0; // Height of an empty tree is 0 and it is balanced
         }
-        int leftHeight, rightHeight;
-        if (!map.containsKey(root.left)) {
-            leftHeight = height(root.left);
-            map.put(root.left, leftHeight);
-        } else {
-            leftHeight = map.get(root.left);
+    
+        int leftHeight = checkBalance(node.left);
+        if (leftHeight == -1) return -1; // Left subtree is not balanced
+    
+        int rightHeight = checkBalance(node.right);
+        if (rightHeight == -1) return -1; // Right subtree is not balanced
+    
+        if (Math.abs(leftHeight - rightHeight) > 1) {
+            return -1; // Current node is not balanced
         }
-
-        if (!map.containsKey(root.right)) {
-            rightHeight = height(root.right);
-            map.put(root.right, rightHeight);
-        } else {
-            rightHeight = map.get(root.right);
-        }
-
-        if (Math.abs(leftHeight - rightHeight) <= 1 && isBalanced(root.left, map) && isBalanced(root.right, map)) {
-            return true;
-        }
-        return false;
+    
+        return 1 + Math.max(leftHeight, rightHeight); // Return the height of the current node
     }
 
     public static int height(Node node) {
@@ -68,6 +65,6 @@ public class Problem2a {
         }
         Arrays.sort(array);
         Node root = constructBalancedBST(array, 0, array.length - 1);
-        System.out.println(isBalanced(root, new HashMap<Node, Integer>()));
+        System.out.println(isBalanced(root));
     }
 }
